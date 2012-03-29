@@ -14,4 +14,5 @@ void initCarte( Carte* c )
       c->cases[ x ][ y ] = 0;
 }
 
+
     
