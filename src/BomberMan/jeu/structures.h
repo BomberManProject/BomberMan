@@ -1,10 +1,12 @@
 #ifndef _STRUCTURES_H_
 #define _STRUCTURES_H_
+//#include <mysql/mysql.h>
+//#include <mysql/mysql_embed.h>
+
+//extern MYSQL mysql;
 
 typedef struct 
 {
-	int caseX;
-	int caseY;
 	char *typeCase;
 	char *typeJoueur;
 	int idBonus;
@@ -13,9 +15,15 @@ typedef struct
 
 typedef struct 
 {
+  Case cases[100][100];
+  int idCarte;
+  int nbJoueur;
+} Carte;
+
+typedef struct 
+{
 	char *idJoueur;
 	char *typeJoueur;
-	int numCarte;
 	int firePlus;
 	int fireMoins;
 	int bombePlus;
@@ -26,17 +34,16 @@ typedef struct
 
 typedef struct 
 {
-	Case cases;
-	int nbJoueur;
-	int idCarte;
-} Carte;
-
-typedef struct 
-{
-	Joueur joueur;
-	Carte carte;
+  Joueur joueur[ 10 ];
+  Carte carte;
 } Jeu;
-	
-int creationFichier(Jeu j);
+
+void initJeu( Jeu* j );
+//void initCarte( Carte* c );
+void initCarte(void);
+int creationJoueur( Jeu jeu, int numJoueur );
+int creationListeJoueur( Jeu jeu );
+int creationMap( Jeu jeu );
 
 #endif /* _STRUCTURES_H_ */
+

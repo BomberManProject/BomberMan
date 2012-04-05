@@ -1,69 +1,97 @@
 #include <stdio.h>
-//#include "BomberMan/jeu/structures.h"
+#include <string.h>
 #include "structures.h"
 
-int creationFichier( Jeu j )
+int creationJoueur( Jeu jeu, int numJoueur )
 {
-	FILE * fichier;  
-    char filename[255];   
-	sprintf((char *) &filename, "Fichier.txt"); // penser à l'endroit où est créé le fichier pour qu'il soit utilisé par d'autres fonctions
-	fichier = fopen(filename, "a");  
-	if (fichier) 
+	FILE * fichierJoueur;  
+    char nomFichier[255];
+       
+	sprintf((char *) &nomFichier, "FichierJoueur%d.txt", numJoueur); 
+	fichierJoueur = fopen(nomFichier, "a"); //option "a" pour écrire à la fin du fichier 
+	if (fichierJoueur) 
 	{ 
-		//int i, j;
-		//for (i=0;i<j.carte.nbJoueur;i++)
-		//{
-			//fprintf(fichier,"#Joueur%d\n", i);
-			fprintf(fichier,"idJoueur=%s\ntypeJoueur=%s\nnumCarte=%d\nfirePlus=%d\nfireMoins=%d\nbombePlus=%d\nbombeMoins=%d\nnbBombe=%d\nidCarte=%d\n", j.joueur.idJoueur, j.joueur.typeJoueur, j.joueur.numCarte, j.joueur.firePlus, j.joueur.fireMoins, j.joueur.bombePlus, j.joueur.bombeMoins, j.joueur.nbBombe, j.joueur.idCarte);  
-		//}
-		//for (j=0;j<4;j++)
-		//{
-			//fprintf(fichier,"#Case%d\n", j);
-			fprintf(fichier,"caseX=%d\ncaseY=%d\ntypeCase=%s\ntypeJoueur=%s\nidBonus=%d\nbombe=%d\n", j.carte.cases.caseX, j.carte.cases.caseY, j.carte.cases.typeCase, j.carte.cases.typeJoueur, j.carte.cases.idBonus, j.carte.cases.bombe);
-		//}
-		fprintf(fichier,"#Autre\n");
-		fprintf(fichier,"nbJoueur=%d\nidCarte=%d\n", j.carte.nbJoueur, j.carte.idCarte);
-		fclose(fichier);  
+		fprintf(fichierJoueur,"#Joueur%d\n", numJoueur);
+		fprintf(fichierJoueur,"idJoueur=%s\ntypeJoueur=%s\nfirePlus=%d\nfireMoins=%d\nbombePlus=%d\nbombeMoins=%d\nnbBombe=%d\nidCarte=%d\n", jeu.joueur[numJoueur].idJoueur, jeu.joueur[numJoueur].typeJoueur, jeu.joueur[numJoueur].firePlus, jeu.joueur[numJoueur].fireMoins, jeu.joueur[numJoueur].bombePlus, jeu.joueur[numJoueur].bombeMoins, jeu.joueur[numJoueur].nbBombe, jeu.joueur[numJoueur].idCarte);  
+		fclose(fichierJoueur);  
 	} 
 	else
 	{
-		fprintf(stderr, "Erreur pour écrire %s\n", filename);
+		fprintf(stderr, "Erreur pour écrire %s\n", nomFichier);
 		return 0;
 	}	   
     return 1;  
 }
 
-int creationMap( Jeu j )
+int creationListeJoueur( Jeu jeu )
 {
-	FILE * fichier;  
-    char filename[255];   
-	sprintf((char *) &filename, "FichierMap.txt"); // penser à l'endroit où est créé le fichier pour qu'il soit utilisé par d'autres fonctions
-	fichier = fopen(filename, "a");  
-	if (fichier) 
+	FILE * fichierListeJoueur;
+	FILE * fichierALire;  
+    char nomFichier[255];
+    char nomFichierLire[255]; 
+    int i, result, taille; 
+    char * buffer;
+	
+	sprintf((char *) &nomFichier, "FichierListeJoueur.txt"); 
+	fichierListeJoueur = fopen(nomFichier, "w"); 
+	if (fichierListeJoueur) 
 	{ 
-		fprintf(fichier,"caseX=%d\ncaseY=%d\ntypeCase=%s\ntypeJoueur=%s\nidBonus=%d\nbombe=%d\n", j.carte.cases.caseX, j.carte.cases.caseY, j.carte.cases.typeCase, j.carte.cases.typeJoueur, j.carte.cases.idBonus, j.carte.cases.bombe);
-		fclose(fichier);  
+		for (i=0;i<jeu.carte.nbJoueur;i++)
+		{
+			result = creationJoueur ( jeu, i );
+			if (result)
+			{
+				sprintf((char *) &nomFichierLire, "FichierJoueur%d.txt", i);
+				buffer=NULL;
+				fichierALire=fopen(nomFichierLire,"r");
+				if (fichierALire)
+				{
+					taille=255;
+					buffer=malloc(sizeof (char)*taille);
+					fread(buffer,sizeof (char),taille,fichierALire);
+					fclose(fichierALire);
+					fprintf(fichierListeJoueur, "%s\n", buffer);
+					free(buffer);
+				}
+			}
+		}
+		fclose(fichierListeJoueur); 
+		system("rm -R FichierJoueur*");
+		system("rm client");
 	} 
 	else
 	{
-		fprintf(stderr, "Erreur pour écrire %s\n", filename);
+		fprintf(stderr, "Erreur pour écrire %s\n", nomFichier);
 		return 0;
 	}	   
     return 1;  
 }
 
-int eraseMap()
+int creationMap( Jeu jeu )
 {
-	FILE * fichier;  
-    char filename[255];   
-	sprintf((char *) &filename, "FichierMap.txt"); // penser à l'endroit où est créé le fichier pour qu'il soit utilisé par d'autres fonctions
-	fichier = fopen(filename, "w");  
-	if (fichier) 
+	FILE * fichierMap;  
+    char nomFichier[255]; 
+    int i, j;
+      
+	sprintf((char *) &nomFichier, "FichierMap.txt"); 
+	fichierMap = fopen(nomFichier, "w");  
+	if (fichierMap) 
 	{ 
-		fclose(fichier);  
+		fprintf(fichierMap,"#Autre\n");
+		fprintf(fichierMap,"idCarte=%d\nnbJoueur=%d\n", jeu.carte.idCarte, jeu.carte.nbJoueur);
+		for (i=0;i<2;i++) //jusqu'à 100 normalement
+		{
+			for (j=0;j<2;j++) //jusqu'à 100 normalement
+			{
+				fprintf(fichierMap,"#Case [%d][%d]\n", i, j);
+				fprintf(fichierMap,"typeCase=%s\ntypeJoueur=%s\nidBonus=%d\nbombe=%d\n", jeu.carte.cases[i][j].typeCase, jeu.carte.cases[i][j].typeJoueur, jeu.carte.cases[i][j].idBonus, jeu.carte.cases[i][j].bombe);
+			}
+		}
+		fclose(fichierMap);  
 	} 
 	else
 	{
+		fprintf(stderr, "Erreur pour écrire %s\n", nomFichier);
 		return 0;
 	}	   
     return 1;  
