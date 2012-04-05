@@ -3,28 +3,16 @@
 #include <mysql/mysql.h>
 #include <mysql/mysql_embed.h>
 #include "fonctionsBdd.h"
-
+#include "structure.h"
 
 
 int main(void)
 {
-	//struct carte
-	//{
-		//int cases[50][50];
-		//char * typecase;
-		//int idbonus;
-		//char* idjoueur;
-		//int bombe;
-	//}
+
 	
 	
 	
-	
-	
-	
-	
-	connexion_Bdd("127.0.0.1","root","projet","bddprojet");
-	init_carte();
-	//requete_Bdd("CREATE TABLE user21(nom TEXT,prenom TEXT) \n");
+	connexion_Bdd("192.168.137.203","joueur","passwordjoueur","bddprojet");
+	initJeu();
 	return 0;
 }
