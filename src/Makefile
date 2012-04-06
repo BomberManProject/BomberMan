@@ -2,7 +2,8 @@ CC=gcc
 CFLAGS=-g -I${BOMBERMANHOME}/src
 LD=gcc
 
-SRC=BomberMan/jeu/structures.c
+SRC=BomberMan/jeu/structures.c \
+    BomberMan/bdd/bdd.c
 
 OBJ=${SRC:.c=.o}
 
