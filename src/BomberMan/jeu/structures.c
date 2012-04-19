@@ -96,3 +96,90 @@ int creationMap( Jeu jeu )
 	}	   
     return 1;  
 }
+
+Jeu fichierStructMap( )
+{
+	FILE * fichier;
+	char buffer[255];
+	int i, j;
+	Jeu jeu2;
+	
+	jeu2.carte.cases[0][0].typeCase=malloc(sizeof (char)*25);
+	jeu2.carte.cases[0][0].typeCase=NULL;
+	jeu2.carte.cases[0][0].typeJoueur=malloc(sizeof (char)*25);
+	jeu2.carte.cases[0][0].typeJoueur=NULL;
+		
+	jeu2.carte.cases[0][1].typeCase=malloc(sizeof (char)*25);
+	jeu2.carte.cases[0][1].typeCase=NULL;
+	jeu2.carte.cases[0][1].typeJoueur=malloc(sizeof (char)*25);
+	jeu2.carte.cases[0][1].typeJoueur=NULL;
+	
+	jeu2.carte.cases[1][0].typeCase=malloc(sizeof (char)*25);
+	jeu2.carte.cases[1][0].typeCase=NULL;
+	jeu2.carte.cases[1][0].typeJoueur=malloc(sizeof (char)*25);
+	jeu2.carte.cases[1][0].typeJoueur=NULL;
+	
+	jeu2.carte.cases[1][1].typeCase=malloc(sizeof (char)*25);
+	jeu2.carte.cases[1][1].typeCase=NULL;
+	jeu2.carte.cases[1][1].typeJoueur=malloc(sizeof (char)*25);
+	jeu2.carte.cases[1][1].typeJoueur=NULL;
+ 
+	if((fichier=fopen("FichierMap.txt", "r"))==NULL) 
+	{
+		fprintf(stderr, "Erreur d'ouverture du fichier\n") ;
+	}
+	 
+	while(!feof(fichier)) /* tant qu'on est pas a la fin du fichier txt */
+	{
+		if(fscanf(fichier, "idCarte=%d\n", &(jeu2.carte.idCarte))==1)
+		{
+			printf("ok1\n");
+		}
+		else if(fscanf(fichier, "nbJoueur=%d\n", &(jeu2.carte.nbJoueur))==1)
+		{
+			printf("ok2\n");
+		}
+		else
+		{
+			fgets(buffer, 128, fichier);
+		}
+	}
+	fclose(fichier);
+	
+	if((fichier=fopen("FichierMap.txt", "r"))==NULL) 
+	{
+		fprintf(stderr, "Erreur d'ouverture du fichier\n") ;
+	}
+	
+	while(!feof(fichier))
+	{
+		for(i=0;i<2;i++)
+		{
+			for(j=0;j<2;j++)
+			{
+				if(fscanf(fichier, "typeCase=%s\n", &(jeu2.carte.cases[i][j].typeCase))==1)
+				{
+					printf("ok3\n");
+				}
+				else if(fscanf(fichier, "typeJoueur=%s\n", &(jeu2.carte.cases[i][j].typeJoueur))==1)
+				{
+					printf("ok4\n");
+				}
+				else if(fscanf(fichier, "idBonus=%d\n", &(jeu2.carte.cases[i][j].idBonus))==1)
+				{
+					printf("ok5\n");
+				}
+				else if(fscanf(fichier, "bombe=%d\n", &(jeu2.carte.cases[i][j].bombe))==1)
+				{
+					printf("ok6\n");
+				}
+				else
+				{
+					fgets(buffer, 128, fichier);
+				}
+			}
+		}
+	}	
+	fclose(fichier);
+	return jeu2;
+}

@@ -38,12 +38,11 @@ typedef struct
   Carte carte;
 } Jeu;
 
-void initJeu( Jeu* j );
-//void initCarte( Carte* c );
-void initCarte(void);
 int creationJoueur( Jeu jeu, int numJoueur );
 int creationListeJoueur( Jeu jeu );
 int creationMap( Jeu jeu );
+//int fichierStructJoueur( Jeu jeu );
+Jeu fichierStructMap( ); 
 
 #endif /* _STRUCTURES_H_ */
 
