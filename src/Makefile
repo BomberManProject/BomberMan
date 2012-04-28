@@ -1,8 +1,6 @@
-CC=gcc
-CFLAGS=-g -I${BOMBERMANHOME}/src
-LD=gcc
-
-SRC=BomberMan/jeu/structures.c
+SRC=\
+	BomberMan/jeu/structures.c \
+	BomberMan/server/fonctionsBdd.c
 
 OBJ=${SRC:.c=.o}
 

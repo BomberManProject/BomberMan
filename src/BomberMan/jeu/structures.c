@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "structures.h"
 
-#include "Bomberman/server/fonctionsBdd.h" // Penser a changer le chemin du fichier
+#include "BomberMan/server/fonctionsBdd.h" // Penser a changer le chemin du fichier
 
 /*void initJeu( Jeu* j )
 {
@@ -144,7 +144,7 @@ Jeu initJoueur(Jeu* j)
 	printf("  idcarte: %s\n",j->joueurs[x].idCarte);	
 	printf("----------------------------------- \n");		
 	}
-
+	int y =0;
 	printf("%s  typeCase\n",j->carte.cases[x][y].typeCase); 
 	printf("%s  typeJoueur\n",j->carte.cases[x][y].typeJoueur);
 	printf("%s  idBonus\n",j->carte.cases[x][y].idBonus);

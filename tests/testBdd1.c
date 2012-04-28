@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <mysql/mysql.h>
 #include <mysql/mysql_embed.h>
-#include "fonctionsBdd.h"
-#include "structure.h"
+#include "BomberMan/server/fonctionsBdd.h"
+#include "BomberMan/jeu/structures.h"
 
 
 int main(void)
