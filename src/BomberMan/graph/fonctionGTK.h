@@ -2,7 +2,7 @@
 #define _FONCTIONGTK_H
 
 extern GtkWidget* CreationFenetre(int argc, char **argv);
-static gboolean on_expose_event(GtkWidget *widget,GdkEventExpose *event,gpointer data);
+gboolean on_expose_event(GtkWidget *widget,GdkEventExpose *event,gpointer data);
 extern int AfficheImage(GtkWidget *window, int argc, char **argv);
-static gboolean realize_evt_reaction( GtkWidget *widget, gpointer data );
+gboolean realize_evt_reaction( GtkWidget *widget, gpointer data );
 #endif

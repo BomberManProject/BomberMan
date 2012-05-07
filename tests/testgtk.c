@@ -2,8 +2,7 @@
 # include <stdlib.h>
 # include <cairo.h>
 # include <gtk/gtk.h>
-#include "BomberMan/graph/fonctionGTK.h"
-#include "BomberMan/graph/fonctionGTK.c"
+#include "../src/BomberMan/graph/fonctionGTK.h"
 
 int main(int argc, char ** argv)
 {

@@ -121,7 +121,7 @@ GtkWidget* CreationFenetre(int argc, char **argv)
 
 
 
-static gboolean on_expose_event(GtkWidget *widget,GdkEventExpose *event,gpointer data)
+gboolean on_expose_event(GtkWidget *widget,GdkEventExpose *event,gpointer data)
 {
   cairo_surface_t *image;
   cairo_t *cr;
@@ -138,7 +138,7 @@ cairo_surface_destroy(image);
 }
 
  
-static gboolean realize_evt_reaction( GtkWidget *widget, gpointer data )
+ gboolean realize_evt_reaction( GtkWidget *widget, gpointer data )
  { // force un événement "expose" juste derrière.
    gtk_widget_queue_draw( widget ); 
    return TRUE;
