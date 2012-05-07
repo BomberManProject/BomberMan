@@ -1,28 +1,29 @@
 #ifndef _STRUCTURES_H_
 #define _STRUCTURES_H_
-//#include <mysql/mysql.h>
-//#include <mysql/mysql_embed.h>
+#include <mysql/mysql.h>
+#include <mysql/mysql_embed.h>
 
-//extern MYSQL mysql;
+extern MYSQL mysql;
 
-typedef struct 
-{
+typedef struct {
 	char *typeCase;
 	char *typeJoueur;
 	int idBonus;
 	int bombe;
 } Case;
 
-typedef struct 
-{
+typedef struct {
   Case cases[100][100];
-  int idCarte;
-  int nbJoueur;
+  
+  
 } Carte;
 
-typedef struct 
-{
-	char *idJoueur;
+// a modifier idjoueur == auto increment
+// et rajouter champ pseudo dans Bdd
+
+typedef struct {
+	int idJoueur;
+	char *pseudo;
 	char *typeJoueur;
 	int firePlus;
 	int fireMoins;
@@ -32,17 +33,20 @@ typedef struct
 	int idCarte;
 } Joueur;
 
-typedef struct 
-{
-  Joueur joueur[ 10 ];
+
+
+
+typedef struct {
+  Joueur joueurs[10];
   Carte carte;
 } Jeu;
 
-int creationJoueur( Jeu jeu, int numJoueur );
-int creationListeJoueur( Jeu jeu );
-int creationMap( Jeu jeu );
-//int fichierStructJoueur( Jeu jeu );
-Jeu fichierStructMap( ); 
+
+
+Jeu initJeu(void);
+Jeu initJoueur(Jeu* j);
+//void initCarte( Carte* c );
+Jeu initCarte(void);
 
 #endif /* _STRUCTURES_H_ */
 
