@@ -1,7 +1,7 @@
 BOMBERHOME=$(shell pwd)
 CC=gcc
-CFLAGS=-g -Wall $(shell mysql_config --cflags) $(shell pkg-config --cflags gtk+-2.0) -I${BOMBERHOME}/src
-LIBS=$(shell mysql_config --libs) $(shell pkg-config --libs gtk+-2.0) -lm
+CFLAGS=-g -Wall $(shell mysql_config5 --cflags) $(shell pkg-config --cflags gtk+-2.0) -I${BOMBERHOME}/src
+LIBS=$(shell mysql_config5 --libs) $(shell pkg-config --libs gtk+-2.0) -lm
 
 SRC=\
 	src/BomberMan/jeu/structures.c \
@@ -18,7 +18,7 @@ PROGS=\
 all: libBomberMan.a $(PROGS)
 
 clean:
-	rm -f $(OBJ) $(PROGS)
+	rm -f $(OBJ) $(PROGS) libBomberMan.a
 
 libBomberMan.a: $(OBJ)
 	ar cq libBomberMan.a $(OBJ)

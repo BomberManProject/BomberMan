@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <mysql.h>
+#include <mysql_embed.h>
+#include "BomberMan/server/fonctionsBdd.h" // Penser a changer le chemin du fichier
 #include "structures.h"
 
-#include "BomberMan/server/fonctionsBdd.h" // Penser a changer le chemin du fichier
 
 /*void initJeu( Jeu* j )
 {
