@@ -1,9 +1,5 @@
 #ifndef _STRUCTURES_H_
 #define _STRUCTURES_H_
-#include <mysql/mysql.h>
-#include <mysql/mysql_embed.h>
-
-extern MYSQL mysql;
 
 typedef struct {
 	char *typeCase;

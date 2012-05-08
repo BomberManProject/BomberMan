@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <mysql/mysql.h>
-#include <mysql/mysql_embed.h>
 #include "fonctionsBdd.h"
+
+
 MYSQL mysql;
 
 
