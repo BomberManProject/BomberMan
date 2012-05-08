@@ -9,9 +9,6 @@
 int main(void)
 {
 
-	
-	
-	
 	connexion_Bdd("192.168.137.203","joueur","passwordjoueur","bddprojet");
 	initJeu();
 	return 0;
