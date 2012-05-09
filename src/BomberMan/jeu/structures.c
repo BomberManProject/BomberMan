@@ -1,23 +1,189 @@
 #include <stdio.h>
 #include <string.h>
 #include "structures.h"
+#include "../server/fonctionsBdd.h"
+
+Jeu initMap( Jeu j )
+{
+	int x,y;
+	//Requête qui sélectionne tout dans ma table scores
+	mysql_query( &mysql, "SELECT * FROM cartes" );
+
+	//Déclaration des pointeurs de structure
+	MYSQL_RES * result = NULL;
+	MYSQL_ROW * row = NULL;
+
+	unsigned int num_champs = 0;
+
+	//On met le jeu de résultat dans le pointeur result
+	result = mysql_use_result( &mysql );
+
+	//On récupère le nombre de champs
+	num_champs = mysql_num_fields( result );
+	//Tant qu'il y a encore un résultat ...
+	while ( ( row = mysql_fetch_row( result ) ) )
+	{
+		//On déclare un pointeur long non signé pour y stocker la taille des valeurs
+		unsigned long * lengths;
+
+		//On stocke cette taille dans le pointeur
+		lengths = mysql_fetch_lengths( result );
+		//strcpy( j.carte.typeCarte, ( char * )row[2] );
+		j.carte.idCarte = atoi( row[0] );
+		j.carte.nbJoueur = atoi( row[1] );
+
+	}
+	return j;
+}
+
+Jeu initCarte( Jeu j )
+{
+	int x,y;
+	//Requête qui sélectionne tout dans ma table scores
+	mysql_query( &mysql, "SELECT * FROM cases" );
+
+	//Déclaration des pointeurs de structure
+	MYSQL_RES * result = NULL;
+	MYSQL_ROW * row = NULL;
+
+	unsigned int num_champs = 0;
+
+	//On met le jeu de résultat dans le pointeur result
+	result = mysql_use_result( &mysql );
+
+	//On récupère le nombre de champs
+	num_champs = mysql_num_fields( result );
+	//Tant qu'il y a encore un résultat ...
+	while ( ( row = mysql_fetch_row( result ) ) )
+	{
+		//On déclare un pointeur long non signé pour y stocker la taille des valeurs
+		unsigned long * lengths;
+
+		//On stocke cette taille dans le pointeur
+		lengths = mysql_fetch_lengths( result );
+		//printf( "%s \n", row[2] );
+		//printf( "%s %s\n", row[1], row[2] );
+		x = atoi( row[1] );
+		y = atoi( row[2] );
+		strcpy( j.carte.cases[x][y].typeCase, ( char * )row[3] );
+		strcpy( j.carte.cases[x][y].typeJoueur, ( char * )row[6] );
+		j.carte.cases[x][y].idBonus = atoi( row[4] );
+		j.carte.cases[x][y].bombe = atoi( row[5] );
+		/*
+		printf( "%d %d %s %s %s %s %s %s\n", x, y, row[1], row[2], row[3], row[4], row[5], row[6] );
+		*/
+	
+	}
+	
+	//mysql_free_result( result );
+	//mysql_close( &mysql );
+	/* TEST
+	printf( "typeCase: %s\n", j.carte.cases[0][0].typeCase ); 
+	printf( "typeJoueur: %s\n", j.carte.cases[0][0].typeJoueur );
+	printf( "idBonus: %d\n", j.carte.cases[0][0].idBonus );
+	printf( "bombe: %d\n", j.carte.cases[0][0].bombe );
+	printf( "\n" );
+	printf( "typeCase: %s\n", j.carte.cases[0][1].typeCase ); 
+	printf( "typeJoueur: %s\n", j.carte.cases[0][1].typeJoueur );
+	printf( "idBonus: %d\n", j.carte.cases[0][1].idBonus );
+	printf( "bombe: %d\n", j.carte.cases[0][1].bombe );
+	printf( "\n" );
+	printf( "typeCase: %s\n", j.carte.cases[1][0].typeCase ); 
+	printf( "typeJoueur: %s\n", j.carte.cases[1][0].typeJoueur );
+	printf( "idBonus: %d\n", j.carte.cases[1][0].idBonus );
+	printf( "bombe: %d\n", j.carte.cases[1][0].bombe );
+	printf( "\n" );
+	printf( "typeCase: %s\n", j.carte.cases[1][1].typeCase ); 
+	printf( "typeJoueur: %s\n", j.carte.cases[1][1].typeJoueur );
+	printf( "idBonus: %d\n", j.carte.cases[1][1].idBonus );
+	printf( "bombe: %d\n", j.carte.cases[1][1].bombe );
+	printf( "\n" );*/
+	
+	return j;
+}
+
+Jeu initJoueur( Jeu j )
+{
+	int x;
+	//Requête qui sélectionne tout dans ma table scores
+	mysql_query( &mysql, "SELECT * FROM joueur" );
+	
+	//Déclaration des pointeurs de structure
+	MYSQL_RES * result = NULL;
+	MYSQL_ROW * row = NULL;
+
+	unsigned int num_champs = 0;
+
+	//On met le jeu de résultat dans le pointeur result
+	result = mysql_use_result( &mysql );
+
+	//On récupère le nombre de champs
+	num_champs = mysql_num_fields( result );
+
+	//Tant qu'il y a encore un résultat ...
+	while ( ( row = mysql_fetch_row( result ) ) )
+	{
+		//On déclare un pointeur long non signé pour y stocker la taille des valeurs
+		unsigned long * lengths;
+
+		//On stocke cette taille dans le pointeur
+		lengths = mysql_fetch_lengths( result );
+		//printf( "%s\n", row[2] );
+		//printf( "%s %s\n", row[1], row[2] );
+		x = atoi( row[0] );
+		j.joueur[x].idJoueur = atoi( row[0] );
+		strcpy( j.joueur[x].pseudo, ( char * )row[1] );
+		strcpy( j.joueur[x].typeJoueur,( char * )row[2] );
+		j.joueur[x].firePlus = atoi( row[3] );
+		j.joueur[x].fireMoins = atoi( row[4] );
+		j.joueur[x].bombePlus = atoi( row[5] );
+		j.joueur[x].bombeMoins = atoi( row[6] );
+		j.joueur[x].nbBombe = atoi( row[7] );
+		j.joueur[x].idCarte = atoi( row[8] );
+		
+		
+		/*TEST
+		printf( "idjoueur: %d\n", j.joueur[x].idJoueur ); 
+		printf( "pseudo: %s\n", j.joueur[x].pseudo );
+		printf( "typeJoueur: %s\n", j.joueur[x].typeJoueur );
+		printf( "firePlus: %d\n", j.joueur[x].firePlus );
+		printf( "fireMoins: %d\n", j.joueur[x].fireMoins );
+		printf( "bombePlus: %d\n", j.joueur[x].bombePlus );
+		printf( "bombemoins: %d\n", j.joueur[x].bombeMoins );
+		printf( "nbBombe: %d\n", j.joueur[x].nbBombe );
+		printf( "idcarte: %d\n", j.joueur[x].idCarte );	
+		printf( "----------------------------------- \n" );	*/	
+	}
+	
+	return j;
+}
+
+Jeu initJeu( void )
+{
+	Jeu j;
+	j = initCarte( j );
+	j = initJoueur( j );
+	j = initMap( j );
+	
+	return j;
+}
 
 int creationJoueur( Jeu jeu, int numJoueur )
 {
 	FILE * fichierJoueur;  
-    char nomFichier[255];
+    char nomFichier[25];
        
-	sprintf((char *) &nomFichier, "FichierJoueur%d.txt", numJoueur); 
-	fichierJoueur = fopen(nomFichier, "a"); //option "a" pour écrire à la fin du fichier 
-	if (fichierJoueur) 
+	sprintf( nomFichier, "FichierJoueur%d.txt", numJoueur ); 
+	fichierJoueur = fopen( nomFichier, "w" ); 
+	if( fichierJoueur ) 
 	{ 
-		fprintf(fichierJoueur,"#Joueur%d\n", numJoueur);
-		fprintf(fichierJoueur,"idJoueur=%s\ntypeJoueur=%s\nfirePlus=%d\nfireMoins=%d\nbombePlus=%d\nbombeMoins=%d\nnbBombe=%d\nidCarte=%d\n", jeu.joueur[numJoueur].idJoueur, jeu.joueur[numJoueur].typeJoueur, jeu.joueur[numJoueur].firePlus, jeu.joueur[numJoueur].fireMoins, jeu.joueur[numJoueur].bombePlus, jeu.joueur[numJoueur].bombeMoins, jeu.joueur[numJoueur].nbBombe, jeu.joueur[numJoueur].idCarte);  
-		fclose(fichierJoueur);  
+		fprintf( fichierJoueur, "Joueur %d\n", numJoueur );
+		fprintf( fichierJoueur, "idJoueur=%d\npseudo=%s\ntypeJoueur=%s\nfirePlus=%d\nfireMoins=%d\nbombePlus=%d\nbombeMoins=%d\nnbBombe=%d\nidCarte=%d\n", jeu.joueur[numJoueur].idJoueur, jeu.joueur[numJoueur].pseudo, jeu.joueur[numJoueur].typeJoueur, jeu.joueur[numJoueur].firePlus, jeu.joueur[numJoueur].fireMoins, jeu.joueur[numJoueur].bombePlus, jeu.joueur[numJoueur].bombeMoins, jeu.joueur[numJoueur].nbBombe, jeu.joueur[numJoueur].idCarte );  
+		fclose( fichierJoueur );  
 	} 
 	else
 	{
-		fprintf(stderr, "Erreur pour écrire %s\n", nomFichier);
+		fprintf( stderr, "Erreur pour écrire %s\n", nomFichier );
 		return 0;
 	}	   
     return 1;  
@@ -27,41 +193,37 @@ int creationListeJoueur( Jeu jeu )
 {
 	FILE * fichierListeJoueur;
 	FILE * fichierALire;  
-    char nomFichier[255];
-    char nomFichierLire[255]; 
-    int i, result, taille; 
-    char * buffer;
+    char nomFichier[25];
+    char nomFichierLire[25]; 
+    int i, result; 
+    char  buffer[255];
 	
-	sprintf((char *) &nomFichier, "FichierListeJoueur.txt"); 
-	fichierListeJoueur = fopen(nomFichier, "w"); 
-	if (fichierListeJoueur) 
+	sprintf( nomFichier, "FichierListeJoueur.txt" ); 
+	fichierListeJoueur = fopen( nomFichier, "w" ); 
+	if( fichierListeJoueur ) 
 	{ 
-		for (i=0;i<jeu.carte.nbJoueur;i++)
+		for( i=1; i<((jeu.carte.nbJoueur)+1); i++ )
 		{
-			result = creationJoueur ( jeu, i );
-			if (result)
+			result = creationJoueur( jeu, i );
+			if( result )
 			{
-				sprintf((char *) &nomFichierLire, "FichierJoueur%d.txt", i);
-				buffer=NULL;
-				fichierALire=fopen(nomFichierLire,"r");
-				if (fichierALire)
+				sprintf( nomFichierLire, "FichierJoueur%d.txt", i );
+				fichierALire = fopen( nomFichierLire, "r" );
+				if( fichierALire )
 				{
-					taille=255;
-					buffer=malloc(sizeof (char)*taille);
-					fread(buffer,sizeof (char),taille,fichierALire);
-					fclose(fichierALire);
-					fprintf(fichierListeJoueur, "%s\n", buffer);
-					free(buffer);
+					fread( buffer, sizeof( char ), 255, fichierALire );
+					fclose( fichierALire );
+					fprintf( fichierListeJoueur, "%s", buffer );
 				}
 			}
 		}
-		fclose(fichierListeJoueur); 
-		system("rm -R FichierJoueur*");
-		system("rm client");
+		fclose( fichierListeJoueur ); 
+		system( "rm -R FichierJoueur*" );
+		//system("rm client");
 	} 
 	else
 	{
-		fprintf(stderr, "Erreur pour écrire %s\n", nomFichier);
+		fprintf( stderr, "Erreur pour écrire %s\n", nomFichier );
 		return 0;
 	}	   
     return 1;  
@@ -70,116 +232,167 @@ int creationListeJoueur( Jeu jeu )
 int creationMap( Jeu jeu )
 {
 	FILE * fichierMap;  
-    char nomFichier[255]; 
+    char nomFichier[25]; 
     int i, j;
       
-	sprintf((char *) &nomFichier, "FichierMap.txt"); 
-	fichierMap = fopen(nomFichier, "w");  
-	if (fichierMap) 
+	sprintf( nomFichier, "FichierMap.txt" ); 
+	fichierMap = fopen( nomFichier, "w" );  
+	if( fichierMap ) 
 	{ 
-		fprintf(fichierMap,"#Autre\n");
-		fprintf(fichierMap,"idCarte=%d\nnbJoueur=%d\n", jeu.carte.idCarte, jeu.carte.nbJoueur);
-		for (i=0;i<2;i++) //jusqu'à 100 normalement
+		fprintf( fichierMap, "Autre\n" );
+		fprintf( fichierMap, "idCarte=%d\nnbJoueur=%d\n", jeu.carte.idCarte, jeu.carte.nbJoueur );
+		for( i=0; i<2; i++ ) //jusqu'à 100 normalement
 		{
-			for (j=0;j<2;j++) //jusqu'à 100 normalement
+			for( j=0; j<2; j++ ) //jusqu'à 100 normalement
 			{
-				fprintf(fichierMap,"#Case [%d][%d]\n", i, j);
-				fprintf(fichierMap,"typeCase=%s\ntypeJoueur=%s\nidBonus=%d\nbombe=%d\n", jeu.carte.cases[i][j].typeCase, jeu.carte.cases[i][j].typeJoueur, jeu.carte.cases[i][j].idBonus, jeu.carte.cases[i][j].bombe);
+				fprintf( fichierMap, "CASE %d %d\n", i, j );
+				fprintf( fichierMap, "typeCase=%s\ntypeJoueur=%s\nidBonus=%d\nbombe=%d\n", jeu.carte.cases[i][j].typeCase, jeu.carte.cases[i][j].typeJoueur, jeu.carte.cases[i][j].idBonus, jeu.carte.cases[i][j].bombe );
 			}
 		}
-		fclose(fichierMap);  
+		fclose( fichierMap );  
 	} 
 	else
 	{
-		fprintf(stderr, "Erreur pour écrire %s\n", nomFichier);
+		fprintf( stderr, "Erreur pour écrire %s\n", nomFichier );
 		return 0;
 	}	   
     return 1;  
 }
 
-Jeu fichierStructMap( )
+Jeu fichierStructMap( Jeu jeu )
 {
 	FILE * fichier;
-	char buffer[255];
-	int i, j;
-	Jeu jeu2;
+	int i, j, a, b;
+	int count;
+	char * array = NULL;
+	size_t longueur = 255;
 	
-	jeu2.carte.cases[0][0].typeCase=malloc(sizeof (char)*25);
-	jeu2.carte.cases[0][0].typeCase=NULL;
-	jeu2.carte.cases[0][0].typeJoueur=malloc(sizeof (char)*25);
-	jeu2.carte.cases[0][0].typeJoueur=NULL;
-		
-	jeu2.carte.cases[0][1].typeCase=malloc(sizeof (char)*25);
-	jeu2.carte.cases[0][1].typeCase=NULL;
-	jeu2.carte.cases[0][1].typeJoueur=malloc(sizeof (char)*25);
-	jeu2.carte.cases[0][1].typeJoueur=NULL;
-	
-	jeu2.carte.cases[1][0].typeCase=malloc(sizeof (char)*25);
-	jeu2.carte.cases[1][0].typeCase=NULL;
-	jeu2.carte.cases[1][0].typeJoueur=malloc(sizeof (char)*25);
-	jeu2.carte.cases[1][0].typeJoueur=NULL;
-	
-	jeu2.carte.cases[1][1].typeCase=malloc(sizeof (char)*25);
-	jeu2.carte.cases[1][1].typeCase=NULL;
-	jeu2.carte.cases[1][1].typeJoueur=malloc(sizeof (char)*25);
-	jeu2.carte.cases[1][1].typeJoueur=NULL;
- 
-	if((fichier=fopen("FichierMap.txt", "r"))==NULL) 
+	for( i=0; i<2; i++ )
 	{
-		fprintf(stderr, "Erreur d'ouverture du fichier\n") ;
-	}
-	 
-	while(!feof(fichier)) /* tant qu'on est pas a la fin du fichier txt */
-	{
-		if(fscanf(fichier, "idCarte=%d\n", &(jeu2.carte.idCarte))==1)
+		for( j=0; j<2; j++ )
 		{
-			printf("ok1\n");
-		}
-		else if(fscanf(fichier, "nbJoueur=%d\n", &(jeu2.carte.nbJoueur))==1)
-		{
-			printf("ok2\n");
-		}
-		else
-		{
-			fgets(buffer, 128, fichier);
-		}
-	}
-	fclose(fichier);
-	
-	if((fichier=fopen("FichierMap.txt", "r"))==NULL) 
-	{
-		fprintf(stderr, "Erreur d'ouverture du fichier\n") ;
-	}
-	
-	while(!feof(fichier))
-	{
-		for(i=0;i<2;i++)
-		{
-			for(j=0;j<2;j++)
+			if( ( fichier = fopen( "FichierMap.txt", "r" ) ) == NULL ) 
 			{
-				if(fscanf(fichier, "typeCase=%s\n", &(jeu2.carte.cases[i][j].typeCase))==1)
+				fprintf( stderr, "Erreur d'ouverture du fichier\n" );
+			}
+			while ( ( getline( &array, &longueur, fichier ) ) != -1 ) 
+			{
+				if( sscanf( array, "idCarte=%d", &( jeu.carte.idCarte ) ) == 1 )
 				{
-					printf("ok3\n");
+					//printf( "ok1\n" );
 				}
-				else if(fscanf(fichier, "typeJoueur=%s\n", &(jeu2.carte.cases[i][j].typeJoueur))==1)
+				if(sscanf (array, "nbJoueur=%d", &( jeu.carte.nbJoueur ) ) == 1 )
 				{
-					printf("ok4\n");
+					//printf( "ok2\n" );
 				}
-				else if(fscanf(fichier, "idBonus=%d\n", &(jeu2.carte.cases[i][j].idBonus))==1)
+				if( ( ( sscanf( array, "%*s %d %d", &a, &b ) ) == 2 ) && ( a == i ) && ( b == j ) )
 				{
-					printf("ok5\n");
+					count = 0;
+					count++;
 				}
-				else if(fscanf(fichier, "bombe=%d\n", &(jeu2.carte.cases[i][j].bombe))==1)
+				if( ( count >= 1 ) && ( count < 5 ) )
 				{
-					printf("ok6\n");
+					if( sscanf( array, "typeCase=%s", jeu.carte.cases[i][j].typeCase ) == 1 )
+					{
+						//printf( "ok3\n" );
+						count++;
+					}
+					if( sscanf( array, "typeJoueur=%s", jeu.carte.cases[i][j].typeJoueur ) == 1 )
+					{
+						//printf( "ok4\n" );
+						count++;
+					}
+					if( sscanf( array, "idBonus=%d", &( jeu.carte.cases[i][j].idBonus ) ) == 1 )
+					{
+						//printf( "ok5\n" );
+						count++;
+					}
+					if( sscanf( array, "bombe=%d", &( jeu.carte.cases[i][j].bombe ) ) == 1 )
+					{
+						//printf( "ok6\n" );
+						count++;
+					}
 				}
-				else
+			}
+			fclose( fichier );
+		}
+	}
+	free( array );
+	return jeu;
+}
+
+Jeu fichierStructJoueur( Jeu jeu )
+{
+	FILE * fichier;
+	int i, a;
+	int count;
+	char *array = NULL;
+	size_t longueur = 255;
+	
+	for( i=1; i<((jeu.carte.nbJoueur)+1); i++ )
+	{
+		if( ( fichier = fopen( "FichierListeJoueur.txt", "r" ) ) == NULL ) 
+		{
+			fprintf( stderr, "Erreur d'ouverture du fichier\n" );
+		}
+		while ( ( getline( &array, &longueur, fichier ) ) != -1 ) 
+		{
+			if( ( ( sscanf( array, "%*s %d", &a ) ) == 1 ) && ( a == i ) )
+			{
+				count = 0;
+				count++;
+			}
+			if( ( count >= 1 ) && ( count < 10 ) )
+			{
+				if( sscanf( array, "idJoueur=%d", &( jeu.joueur[i].idJoueur ) ) == 1 )
 				{
-					fgets(buffer, 128, fichier);
+					//printf( "ok\n" );
+					count++;
+				}
+				if( sscanf( array, "pseudo=%s", jeu.joueur[i].pseudo ) == 1 )
+				{
+					//printf( "okbis\n" );
+					count++;
+				}
+				if( sscanf( array, "typeJoueur=%s", jeu.joueur[i].typeJoueur ) == 1 )
+				{
+					//printf( "ok2\n" );
+					count++;
+				}
+				if(sscanf(array, "firePlus=%d", &( jeu.joueur[i].firePlus ) ) == 1)
+				{
+					//printf( "ok3\n" );
+					count++;
+				}
+				if( sscanf( array, "fireMoins=%d", &( jeu.joueur[i].fireMoins ) ) == 1 )
+				{
+					//printf( "ok4\n" );
+					count++;
+				}
+				if( sscanf( array, "bombePlus=%d", &( jeu.joueur[i].bombePlus ) ) == 1 )
+				{
+					//printf( "ok5\n" );
+					count++;
+				}
+				if( sscanf( array, "bombeMoins=%d", &( jeu.joueur[i].bombeMoins ) ) == 1 )
+				{
+					//printf( "ok6\n" );
+					count++;
+				}
+				if( sscanf( array, "nbBombe=%d", &( jeu.joueur[i].nbBombe ) ) == 1 )
+				{
+					//printf( "ok7\n" );
+					count++;
+				}
+				if( sscanf( array, "idCarte=%d", &( jeu.joueur[i].idCarte ) ) == 1 )
+				{
+					//printf( "ok8\n" );
+					count++;
 				}
 			}
 		}
-	}	
-	fclose(fichier);
-	return jeu2;
+		fclose( fichier );
+	}
+	free( array );
+	return jeu;
 }
