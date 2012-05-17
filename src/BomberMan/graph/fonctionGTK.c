@@ -3,6 +3,11 @@
 # include <cairo.h>
 # include <gtk/gtk.h>
 #include "fonctionGTK.h"
+#include "../jeu/structures.h"
+
+
+
+
 
  GtkWidget *create_arrow_button( GtkArrowType  arrow_type )
  { // Les boutons sont en fait des conteneurs à un seul élément.
@@ -69,7 +74,7 @@ GtkWidget* CreationFenetre(int argc, char **argv)
     // drawing area( cairo)
   GtkWidget* drawing_area = gtk_drawing_area_new ();
  // largeur=150 pixels, hauteur = 100 pixels.
- gtk_widget_set_size_request (drawing_area, 300, 300);
+ gtk_widget_set_size_request (drawing_area, 170, 170);
   
   
    // Rajoute les composants dans les conteneurs 
@@ -118,22 +123,32 @@ GtkWidget* CreationFenetre(int argc, char **argv)
     return drawing_area;
 }
 
-
-
-
 gboolean on_expose_event(GtkWidget *widget,GdkEventExpose *event,gpointer data)
 {
-  cairo_surface_t *image;
-  cairo_t *cr;
-  image = cairo_image_surface_create_from_png("lol.png");
-  cr = gdk_cairo_create (widget->window);
+	Jeu k;
+	int i,j;
+	k = fichierStructMap(k);
+	for (i=0;i<6;i++){
+		for (j=0;j<6;j++){
+	
+			//printf("typeCase[%d][%d]:%s\n", i,j,k.carte.cases[i][j].typeCase);
+			cairo_surface_t *image;
+			cairo_t *cr;
+			image = cairo_image_surface_create_from_png(k.carte.cases[i][j].typeCase);
+  
+			cr = gdk_cairo_create (widget->window);
 
-  cairo_set_source_surface(cr, image, 0, 0);
-  cairo_paint(cr);
+			cairo_set_source_surface(cr, image, i*34, j*34);
+	
+			cairo_paint(cr);
 
-  cairo_destroy(cr);
+			cairo_destroy(cr);
 
-cairo_surface_destroy(image);
+			cairo_surface_destroy(image);
+		}
+	}
+	
+
   return TRUE;
 }
 

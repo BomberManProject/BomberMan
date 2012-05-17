@@ -1,0 +1,183 @@
+Autre
+idCarte=1
+nbJoueur=2
+CASE 0 0
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 0 1
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 0 2
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 0 3
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 0 4
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 0 5
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 1 0
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 1 1
+typeCase=mario.png
+typeJoueur=KennyTheWinner
+idBonus=0
+bombe=0
+CASE 1 2
+typeCase=couloir.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 1 3
+typeCase=mur.png
+typeJoueur=
+idBonus=1
+bombe=0
+CASE 1 4
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 1 5
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 2 0
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 2 1
+typeCase=couloir.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 2 2
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 2 3
+typeCase=mur.png
+typeJoueur=
+idBonus=1
+bombe=0
+CASE 2 4
+typeCase=mur.png
+typeJoueur=
+idBonus=1
+bombe=0
+CASE 2 5
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 3 0
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 3 1
+typeCase=mur.png
+typeJoueur=
+idBonus=1
+bombe=0
+CASE 3 2
+typeCase=mur.png
+typeJoueur=
+idBonus=1
+bombe=0
+CASE 3 3
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 3 4
+typeCase=couloir.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 3 5
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 4 0
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 4 1
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 4 2
+typeCase=mur.png
+typeJoueur=
+idBonus=1
+bombe=0
+CASE 4 3
+typeCase=couloir.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 4 4
+typeCase=luigi.png
+typeJoueur=Kennydu74
+idBonus=0
+bombe=0
+CASE 4 5
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 5 0
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 5 1
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 5 2
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 5 3
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 5 4
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0
+CASE 5 5
+typeCase=mur.png
+typeJoueur=
+idBonus=0
+bombe=0

@@ -4,6 +4,7 @@
 # include <gtk/gtk.h>
 #include "../src/BomberMan/graph/fonctionGTK.h"
 
+
 int main(int argc, char ** argv)
 {
 	GtkWidget *window;
@@ -11,7 +12,7 @@ int main(int argc, char ** argv)
 	window=CreationFenetre(argc,argv);
 	
 	AfficheImage(window,argc,argv);
-	 gtk_main ();
+	gtk_main ();
 	return 0;
 	
 }
